@@ -62,7 +62,7 @@ def finalemail():
 	msg['From'] = fromaddr
 	msg['To'] = toaddr
 	msg['Subject'] = "Scamp Pipeline Project "+sys.argv[1]
-	body = "This project has been successfully processed. Congrats Ciara, you are a boss ass bitch"
+	body = "This project has been successfully processed."
 	msg.attach(MIMEText(body, 'html'))
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.starttls()
