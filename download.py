@@ -122,9 +122,43 @@ for file in fileList.list:
 
 filelist = filedict.keys()
 
+filelist = filedict.keys()
+
 if len(filelist) == 0:
-	print "This project does not have any raw files"
-	sys.exit()
+        print "This project does not have any raw files, would you like to execute the manual download function? (y/n)"
+        response = raw_input()
+        if response == "y":
+                if not os.path.isdir(sys.argv[1]+"_manualdwnld"):
+                        os.makedirs(sys.argv[1]+"_manualdwnld")
+                print "INSTRUCTIONS: Please manually download the files from PRIDE into the "+sys.argv[1]+"_manualdwnld folder that has ju$
+                print "When the download is complete, enter y to continue"
+                manualready = raw_input()
+                if manualready == "y":
+
+                        manualdr = sys.argv[1]+"_manualdwnld/"
+                        rawnum = 0
+                        rawpaths = []
+                        filelist = []
+                        for file in os.listdir(manualdr):
+                                if file.endswith(".raw"):
+                                        rawnum += 1
+                                        rawpaths.append(manualdr+"/"+file)
+                                        filelist.append(file)
+
+                        batch_no = 0
+                        for i in range(0,len(rawpaths),batch):
+                                print "Creating folder for batch "+str(batch_no)
+                                if not os.path.isdir("{}_{}".format(sys.argv[1],batch_no)):
+                                        os.makedirs("{}_{}".format(sys.argv[1],batch_no))
+                                        batchdirect = "{}_{}".format(sys.argv[1],batch_no)
+                                        for x in range(i, i+batch):
+                                                if x > (len(rawpaths)-1):
+                                                        break
+                                                subprocess.call("mv "+rawpaths[x]+" "+batchdirect, shell=True)
+                                        batch_no += 1
+
+        else:
+                sys.exit()
 
 #PIPELINE ACTION IN BATCH SYSTEM
 batch_no = 0
@@ -132,7 +166,7 @@ batch_no = 0
 
 
 total_files = 0
-for i in range(0,len(filedict),batch):
+for i in range(0,len(filelist),batch):
 	print "batch", batch_no
 	print "Checking for completion"
 	sqlitetest = []	
