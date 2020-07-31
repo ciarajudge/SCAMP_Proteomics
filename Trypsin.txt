@@ -1,0 +1,3 @@
+search_enzyme_name = Trypsin                # Name of enzyme to be written to the pepXML file.
+search_enzyme_cutafter = KR                 # Residues after which the enzyme cuts.
+search_enzyme_butnotafter = P               # Residues that the enzyme will not cut before.
